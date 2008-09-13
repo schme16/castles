@@ -1,27 +1,48 @@
-
-function spawnPanel(boolean)
-
-	spawnPanel =vgui.Create( "onslaught_menu" )
-	spawnPanel:SetTitle( "Onslaught Menu" )
-	spawnPanel.ContentPanel = vgui.Create( "DPropertySheet", spawnPanel )
-	spawnPanel:ShowCloseButton( false )
-	local HelpLab = vgui.Create("DLabel")
-	HelpLab:SetText( "Welcome to Onslaught: Evolved!\nSpawn props and use them to build a base.\nThen fight off the hordes of NPCs!" )
-	HelpLab:SetTextColor( Color( 255, 255, 255, 255 ) )
-	HelpLab:SizeToContents( )
-
-	spawnPanel.ContentPanel:AddSheet( "Help", HelpLab, "onslaught/help", true, true )
-	spawnPanel.ContentPanel:AddSheet( "Class", vgui.Create( "onslaught_classselect", spawnPanel ), "gui/silkicons/group", true, true )
-	spawnPanel.ContentPanel:AddSheet( "Build", vgui.Create( "onslaught_PropSpawn", spawnPanel ), "onslaught/bricks", true, true )
-	spawnPanel.ContentPanel:AddSheet( "Commands", vgui.Create("onslaught_commands", spawnPanel), "onslaught/help", true, true )
+function init() 
+	self = vgui.Create( "DFrame" )
+	self:SetPos( 50,50 )
+	self:SetSize( 330, 350 )
+	self:SetTitle( " =====================Score Panel===================" )
+	self:SetVisible( true )
+	self:SetDraggable( true )
+	self:ShowCloseButton( true )
+	self:MakePopup()
 	
-	if LocalPlayer( ):IsAdmin( ) then
-		spawnPanel.ContentPanel:AddSheet( "Admin", vgui.Create( "onslaught_admin", spawnPanel ), "onslaught/bricks", true, true )
+	local PropertySheet = vgui.Create( "DPropertySheet" )
+	PropertySheet:SetParent( self )
+	PropertySheet:SetPos( 0, 25 )
+	PropertySheet:SetSize( 290, 325 )
+
+	
+	local playerStats = vgui.Create("DListView")
+	playerStats:SetParent(self)
+	playerStats:SizeToContents()
+	playerStats:SetMultiSelect(false)
+	playerStats:AddColumn("Name") // Add column
+	playerStats:AddColumn("Team")
+	playerStats:AddColumn("Score")
+	playerStats:AddColumn("Cash")
+	for k,v in pairs(player.GetAll()) do
+	playerStats:AddLine(v:Nick(), TeamsIndex[v:Team()].Name, v:Frags(), tostring(v.money)) // Add lines
 	end
-	
-	
-	
-			spawnPanel:SetVisible( boolean )
+
+
+
+	PropertySheet:AddSheet( "player Scores", playerStats, "gui/silkicons/user", false, false, "This is the individual scores for each player." )
+	PropertySheet:AddSheet( "Planetary Ownership", teamStats, "gui/silkicons/group", false, false, "This is the planetary control ratios" ) 
+	concommand.Add("score",Scores, close) // adding the console command 
+
 end
 
-spawnPanel(true)
+
+function panelShow()
+	
+end
+
+function panelShow()
+	
+end
+
+
+
+init() 
