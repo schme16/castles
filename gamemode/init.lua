@@ -36,6 +36,7 @@ end
 function GM:PlayerSpawn(ply)
 	hook.Call("PlayerLoadout", GAMEMODE, ply)
 	hook.Call("PlayerSetModel", GAMEMODE, ply)
+	ply:SetTeam(1)
 	ply:SetGravity(0)
 end
 
