@@ -1,4 +1,7 @@
 include( 'shared.lua' )
+include( 'cl_spawnpanel.lua' )
+
+
 
 local think = CurTime() + 0.5
 local owner = " "
