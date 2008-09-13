@@ -1,0 +1,12 @@
+"Gamemode"
+{
+	"name"		"Castle"
+	"version"	"0.5"
+
+	"author_name"	"Josef Stalin"
+	"author_email"	"schme16@gmail.com"
+	"author_url"	"http://www.redpogodesign.com/"
+	
+	"info"		"This is a castle based gamemode; Make your castle; fight your foes. Simple."
+	"hide"		"0"
+}
