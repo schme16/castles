@@ -18,8 +18,6 @@ function GM:Think()
 end
 
 
-
-
 function drawHUD()
 
 	if(locationValid) then
@@ -63,7 +61,6 @@ function hidehud(name)
 		if name == v then return false end
 	end
 end
-
 
 usermessage.Hook("locationValid_HUD", locationValid_HUD) 
 usermessage.Hook("locationRadius_HUD", locationValid_HUD) 

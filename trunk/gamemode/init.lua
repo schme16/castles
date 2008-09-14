@@ -1,5 +1,24 @@
+
+
+				/***************************************************************************************************/
+				/***********************************************CASTLE********************************************/
+				/***************************************************************************************************/
+/*------------------------------------------------
+Castle Credits:
+	Original Concept: Big Blue/Large Aqua: (http://forums.facepunchstudios.com/showthread.php?t=603387)
+	Coding: Josef Stalin
+	Mapping: Original Concept: Big Blue/Large Aqua
+
+	Version: 0.5
+------------------------------------------------*/
+				
+				
+/************************************************************/
+/**********************Calling the Incudes*********************/
+/************************************************************/				
 AddCSLuaFile( "cl_init.lua" )
 AddCSLuaFile( 'cl_spawnpanel.lua' )
+AddCSLuaFile( 'cl_spawnmenu.lua' )
 AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 include( 'hooks.lua' )
@@ -7,13 +26,31 @@ include( 'hooks.lua' )
 
 
 /***********************************************************/
-/********************Variable Initialization********************/
+/********************Variable Initialization*******************/
 /***********************************************************/
+
 Locations = {}
 local locationsEmpty = true
 PW_Debug = true
 useGravity = true
+gravGunExcludes = {
+{name = "Colony", class = "spawner"},
+{name = "Atlantis DHD", class = "dhd_atlantis"},
+{name = "SG1 DHD", class = "dhd_sg1"},
+{name = "Base DHD", class = "dhd_base"},
+{name = "Stargate SG1", class = "stargate_sg1"},
+{name = "Stargate Atlantis", class = "stargate_atlantis"},
+{name = "Stargate Base", class = "stargate_base"},
 
+
+
+}
+
+
+
+/***********************************************************/
+/*************************Functions*************************/
+/***********************************************************/
 
 function GM:Think()
 if CurTime() < (nexttime or 0) then return end
@@ -135,10 +172,44 @@ function locationsTick()
 
 end
 
-function gravityTick(ply)
-	if pcall(function() 
-		local pos  = ply:GetPos()--Vector(0, 0, 0)
-		ply:SetPos((pos-Vector(0,0,1)))
-	end) then end
+function PhysGravGunPickupTest(ply, ent)
+	if(!ent:IsValid()) then return end
+	for k,v in pairs(gravGunExcludes) do
+		if(ent:GetClass() == v.class) then
+			return false
+		end
+	end
+	
+
 end
 
+function CanToolTest(ply, tr, toolgun)
+	if(tr.HitWorld) then return end
+	ent = tr.Entity
+	if(!ent:IsValid()) then return end
+	if(string.find(string.lower(ent:GetModel()), string.lower("models/props_wasteland/rockgranite")) == 1 or string.find(string.lower(ent:GetModel()), string.lower("models/props_wasteland/rockcliff")) == 1 ) then
+		return false
+	end
+end
+
+function CanSpawnProp(ply, model, propID)
+	if(moneySystem) then
+		if(ply.money < 100) then
+			propID:Remove()
+		else
+			ply.money = ply.money - 100
+		end
+	end
+end
+
+
+
+
+/***********************************************************/
+/***********************Gamemode Hooks*********************/
+/***********************************************************/
+
+hook.Add("GravGunPunt", "PhysGravGunPickupTest", PhysGravGunPickupTest)
+hook.Add("GravGunPickupAllowed", "PhysGravGunPickupTest", PhysGravGunPickupTest)
+hook.Add("PhysgunPickup", "PhysGravGunPickupTest", PhysGravGunPickupTest)
+hook.Add("CanTool", "CanToolTest", CanToolTest)
