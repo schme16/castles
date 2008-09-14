@@ -12,10 +12,9 @@ defenceList =
 /*Offence Prop*/
 offenceList = 
 {
-	{model = "models/cannonball.mdl", tip = "A Cannon Balls; Use with the Cannon."},
+	{model = "models/cannonballs/smallcannonball.mdl", tip = "Small Cannon Ball; Use with the Cannon."},
+	{model = "models/cannonballs/cannonball.mdl", tip = "Large Cannon Ball; Use with the Cannon."},
 }
-
-Menu = vgui.Create( "DFrame" )
 
 function init() 
 	Menu = vgui.Create( "DFrame" )
@@ -105,8 +104,6 @@ function init()
 	PropertySheet:AddSheet( "Weapons", offencePanel, "gui/silkicons/group", false, false, "Want some weapons? Got a need for destruction? We got what you need right here!" ) 
 	
  	PropertySheet:AddSheet( "Help", helpPanel, "gui/silkicons/group", false, false, "New to the game? Hers some help." ) 
-
-	
 	Menu = Menu
 end
 
@@ -126,5 +123,18 @@ end
 	-- Menu:SetVisible( false )
 -- end
 
+function GM:ContextMenuOpen()
+	Menu:SetVisible( true )
+end
 
-init() --Initializes the derma panels
+function GM:OnContextMenuClose()
+	Menu:SetVisible( false )
+end
+init() 
+
+
+local tr = LocalPlayer():GetEyeTrace()
+ 
+if( tr.Hit and ( tr.HitPos - LocalPlayer():GetPos() ):Length() <= 7874 ) then //7874 inches (units) is 200 meters
+	print(tr.Entity)
+end
