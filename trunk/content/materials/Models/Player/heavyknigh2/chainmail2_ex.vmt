@@ -1,0 +1,20 @@
+//"VertexLitGeneric"
+mn_PhongEx
+{
+	"$baseTexture" "models\player\heavyknigh2\chainmail2"
+	"$bumpMap" "models\player\heavyknigh2\chainmail2_normal"
+	"$HxEM" "models\player\heavyknigh2\chainmail2_normal"
+	"$envmap" "env_cubemap"
+	"$normalmapalphaenvmapmask" 1
+	"$model" 1
+	"$phong" "1"
+	"$phongexponent" "3"
+	"$phongboost" "4"	
+	"$phongfresnelranges"	"[.6 .7 2]"
+	"$ENVMAPFRESNELRANGES" "[ 0 1 2]"
+	"$phongalbedotint" "1"	
+	"$envmapmaskscale" "1.0"
+	"$phongmaskscale" "1.0"
+	
+	
+}

@@ -1,0 +1,6 @@
+"eyes"
+{
+	"$basetexture" "models/player/heavyknigh2/eyeball_r"
+	"$iris" "models/player/heavyknigh2/pupil_r"
+	"$halflambert" 1
+}
