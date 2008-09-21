@@ -1,0 +1,12 @@
+"vertexlitgeneric"
+{
+	"$baseTexture" "models\player\heavyknigh2\knight_skin2"
+	"$bumpMap" "models\player\heavyknigh2\knight_normal"
+	"$envmap" "env_cubemap"
+	"$normalmapalphaenvmapmask" 1
+	"$model" 1
+	"$phong" "1"
+	"$phongexponent" "30"
+	"$phongboost" "50"	
+	"$phongfresnelranges"	"[.1 1 3]"
+}
