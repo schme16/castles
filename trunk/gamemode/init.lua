@@ -1,7 +1,7 @@
 
 
 				/***************************************************************************************************/
-				/***********************************************CASTLE********************************************/
+				/*****************************************CASTLE GAMEMODE***************************************/
 				/***************************************************************************************************/
 /*------------------------------------------------
 Castle Credits:
@@ -22,6 +22,7 @@ AddCSLuaFile( 'cl_timerHUD.lua' )
 AddCSLuaFile( "shared.lua" )
 include( 'shared.lua' )
 include( 'hooks.lua' )
+include( 'propdamage.lua' )
 
 
 
@@ -29,9 +30,10 @@ include( 'hooks.lua' )
 /********************Variable Initialization*******************/
 /***********************************************************/
 
-PW_Debug = true
+CastleDebug = true
 useGravity = true
 countDown = 0.5
+propHealth = 50
 actualtime = (countDown * 60) + CurTime()
 gravGunExcludes = {
 {name = "Colony", class = "spawner"},
@@ -57,16 +59,29 @@ function GM:Think()
 
 	timeLeft = actualtime - CurTime()
 
-for key, ply in pairs(player.GetAll()) do
-	umsg.Start("timerTime", ply)
-	umsg.Long(timeLeft)
-	umsg.End()
-end
+	for key, ply in pairs(player.GetAll()) do
+		umsg.Start("timerTime", ply)
+		umsg.Long(timeLeft)
+		umsg.End()
+	end
 
 
 if CurTime() < (nexttime or 0) then return end
 
-nexttime = CurTime() + 0.1
+
+	for key,ent in pairs(ents.GetAll()) do
+		if(ent.healthSet == nil) then
+		if(ent:GetClass() == "prop_physics") then
+				propDamageSetup(ent, propHealth)
+			end
+		else
+		if(ent:GetClass() == "prop_physics") then
+				propDamageCheck(ent)
+			end
+		end
+	end
+
+	nexttime = CurTime() + 0.1
 end
 
 function GM:InitPostEntity()
