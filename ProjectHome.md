@@ -1,0 +1,1 @@
+This is the gamemode "Castles" it's a build your own base, defence gamemode... its a a little like source forts but its medieval themed, and hopefully better heh
